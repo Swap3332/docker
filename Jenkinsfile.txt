@@ -3,11 +3,25 @@ node{
      {
           git credentialsId: 'gitpas', url: 'https://github.com/Swap3332/docker.git'
      }
+
      stage('Build')
      {
      def mvnHome = tool name: 'Maven', type: 'maven'
      def mvnCMD = "${mvnHome}/bin/mvn"
      sh "${mvnCMD} clean package"
      }
-     
+
+     stage('Build docker image')
+     {
+      sh 'docker build -t swap333/webapp:1.0'
+     }
+
+      stage('Push docker image')
+     {
+      withCredentials([String(credentialsId: 'docker-pwd', variable: 'dockerpwd')])
+      { 
+      sh "docker login -u swap333 -p ${dockerpwd}"
+      }
+      sh 'docker push swap333/webapp:1.0'
+   }
 }
