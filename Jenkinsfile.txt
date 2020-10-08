@@ -18,7 +18,7 @@ node{
 
       stage('Push docker image')
      {
-      withCredentials([String(credentialsId: 'docker-pwd', variable: 'dockerpwd')])
+      withCredentials([string(credentialsId: 'docker-pwd', variable: 'dockerpwd')])
       { 
       sh "docker login -u swap333 -p ${dockerpwd}"
       }
