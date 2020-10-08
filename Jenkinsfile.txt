@@ -1,0 +1,13 @@
+node{
+     stage('checkout')
+     {
+          git credentialsId: 'gitpas', url: 'https://github.com/Swap3332/docker.git'
+     }
+     stage('Build')
+     {
+     def mvnHome = tool name: 'Maven', type: 'maven'
+     def mvnCMD = "${mvnHome}/bin/mvn"
+     sh "$mvnCMD} clean package"
+     }
+     
+}
